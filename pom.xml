@@ -13,6 +13,7 @@
         <module>sc-eureka</module>
         <module>sc-zuul</module>
         <module>sc-service</module>
+        <module>sc-gateway</module>
     </modules>
 
     <parent>
