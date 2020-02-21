@@ -1,0 +1,18 @@
+#######  单节点   ########
+spring:
+  application:
+    name: sc-eureka
+
+server:
+  port: 10001
+
+eureka:
+  instance:
+    hostname: sc-eureka
+  client:
+    #表示是否从 Eureka Server 获取注册信息，默认为true。单节点的情况下，不需要同步其它节点的数据。
+    fetch-registry: false
+    #是否将自己注册到 Eureka Server， 默认为true。
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

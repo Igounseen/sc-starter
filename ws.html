@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+webSocket连接
+
+<script>
+    // 打开一个 web socket
+    var ws = new WebSocket("ws://localhost:10002/sc-user/websocket?user=Tony");
+    ws.onopen = function() {
+        // Web Socket 已连接上，使用 send() 方法发送数据
+        ws.send("测试发送");
+        console.log('open');
+    };
+    ws.onmessage = function (e) {
+        console.log('message', e.data);
+    };
+    ws.onclose = function() {
+        console.log('close');
+    };
+</script>
+
+</body>
+</html>
