@@ -11,6 +11,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>sc-user</module>
+        <module>sc-oauth</module>
+        <module>sc-order</module>
     </modules>
     <artifactId>sc-service</artifactId>
 
@@ -24,14 +26,16 @@
         <swagger.bootstrap.ui.version>1.9.6</swagger.bootstrap.ui.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
-            <!-- Gson -->
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>${gson.version}</version>
-            </dependency>
             <!--Druid数据源支持-->
             <dependency>
                 <groupId>com.alibaba</groupId>

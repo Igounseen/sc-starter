@@ -3,14 +3,14 @@ spring:
     name: sc-zuul
 
 server:
-  port: 10002
+  port: 10010
 
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://localhost:10001/eureka/
+      defaultZone: http://localhost:10000/eureka/
 zuul:
   routes:
     sc-user:

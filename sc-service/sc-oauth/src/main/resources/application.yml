@@ -1,14 +1,12 @@
 server:
-  port: 10500
+  port: 10100
   servlet:
-    context-path: /sc-user
+    context-path: /sc-oauth
   use-forward-headers: true
-
 
 spring:
   application:
-    name: sc-user
-
+    name: sc-oauth
 
 eureka:
   client:

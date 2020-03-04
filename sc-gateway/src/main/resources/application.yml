@@ -1,5 +1,5 @@
 server:
-  port: 1004
+  port: 10020
 
 spring:
   application:
@@ -7,14 +7,20 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: sc-user-websocket
+          uri: lb://sc-user
+          predicates:
+            - Path=/sc-user/websocket/**
         - id: sc-user
           uri: lb://sc-user
           predicates:
             - Path=/sc-user/**
+
+
 
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://localhost:10001/eureka/
+      defaultZone: http://localhost:10000/eureka/

@@ -4,7 +4,7 @@ spring:
     name: sc-eureka
 
 server:
-  port: 10001
+  port: 10000
 
 eureka:
   instance:
