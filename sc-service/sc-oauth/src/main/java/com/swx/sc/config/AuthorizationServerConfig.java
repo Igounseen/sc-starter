@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
  * @author shiwenxiang
@@ -30,6 +32,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     UserDetailsService userDetailsService;
 
     /**
+     * AuthorizationServerSecurityConfigurer主要用来配置AuthorizationServer安全认证的相关信息，创建ClientCredentialsTokenEndpointFilter核心过滤器
+     *
      * @param security
      * @throws Exception
      */
@@ -39,7 +43,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     /**
-     * 客户端配置
+     * 配置OAuth2的客户端的信息
      * <p>
      * 配置了两个客户端 client_A 和 client_B, 授权模式分别为 客户端模式（client_credentials）和密码模式（password）
      * <p>
@@ -74,6 +78,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints
+                .tokenStore(new RedisTokenStore(redisConnectionFactory))
+                .authenticationManager(authenticationManager)
+                .userDetailsService(userDetailsService)
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST, HttpMethod.GET);
         super.configure(endpoints);
     }
 }
