@@ -5,18 +5,42 @@ spring:
   application:
     name: sc-gateway
   cloud:
+    loadbalancer:
+      ribbon:
+        # 关闭 LoadBalancerClientFilter，使用 ReactiveLoadBalancerClientFilter
+        enabled: false
     gateway:
+      # 跨域配置
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowCredentials: true
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      # 全局超时配置
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 5s
+      # 路由配置
       routes:
-        - id: sc-user-websocket
-          uri: lb://sc-user
-          predicates:
-            - Path=/sc-user/websocket/**
         - id: sc-user
           uri: lb://sc-user
           predicates:
             - Path=/sc-user/**
-
-
+          filters:
+            # 增加请求头
+            - AddRequestHeader=X-Request-Fruit, apple
+            # 增加请求参数
+            - AddRequestParameter=colour, blue
+            # 增加响应头
+            - AddResponseHeader=X-Response-Vetetable, potato
+            # 去掉响应头。 有可选的strategy参数，默认为 RETAIN_FIRST
+            #- DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: sc-order
+          uri: lb://sc-order
+          predicates:
+            - Path=/sc-order/**
 
 eureka:
   instance:

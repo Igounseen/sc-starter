@@ -12,7 +12,7 @@
 sockJs连接
 
 <script>
-    var sock = new SockJS('http://localhost:10004/sc-user/sock-js?user=Tony');
+    var sock = new SockJS('http://localhost:10020/sc-user/sock-js?user=Tony');
     sock.onopen = function () {
         sock.send("测试发送");
         console.log('open');

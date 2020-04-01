@@ -8,6 +8,14 @@ server:
 spring:
   application:
     name: sc-user
+  datasource:
+    driver-class-name: org.h2.Driver
+    schema: classpath:db/schema-*.sql
+    data: classpath:db/data-*.sql
+    url: jdbc:h2:mem:test
+    username: root
+    password: root
+
 
 
 eureka:
@@ -16,3 +24,11 @@ eureka:
       defaultZone: http://localhost:10000/eureka
   instance:
     prefer-ip-address: true
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
