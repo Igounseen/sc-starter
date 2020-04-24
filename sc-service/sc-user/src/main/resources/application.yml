@@ -10,11 +10,15 @@ spring:
     name: sc-user
   datasource:
     driver-class-name: org.h2.Driver
-    schema: classpath:db/schema-*.sql
-    data: classpath:db/data-*.sql
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:mem:test_db
     username: root
     password: root
+    schema: classpath:db/schema-*.sql
+    data: classpath:db/data-*.sql
+
+  h2:
+    console:
+      enabled: true
 
 
 
@@ -23,12 +27,25 @@ eureka:
     service-url:
       defaultZone: http://localhost:10000/eureka
   instance:
+    # 优先使用ip注册
     prefer-ip-address: true
 
 
 mybatis-plus:
   global-config:
     db-config:
+      # 逻辑删除
       logic-delete-field: deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        #开放所有页面节点  默认只开启了health、info两个节点
+        include: "*"
+logging:
+  level:
+    root: info
